@@ -97,7 +97,7 @@ function showMessage(message, type) {
 
 function updatePaymentMethod() {
 
-    const isOnline = paymentMethod.value === "Online";
+    const isOnline = ["AUB", "GCash"].includes(paymentMethod.value);
 
     onlinePaymentSection.hidden = !isOnline;
 
@@ -436,7 +436,7 @@ registrationForm.addEventListener(
             document.getElementById("waiverAccepted").checked;
 
         const files =
-            method === "Online"
+            method !== "Pay Onsite"
                 ? Array.from(paymentProof.files || [])
                 : [];
 
@@ -517,7 +517,7 @@ registrationForm.addEventListener(
         // Validate payment method
         // ----------------------------------------------
 
-        if (!["Online", "Pay Onsite"].includes(method)) {
+        if (!["AUB", "GCash", "Pay Onsite"].includes(method)) {
 
             showMessage(
                 "Please select a payment method.",
@@ -549,7 +549,7 @@ registrationForm.addEventListener(
         // Validate payment receipts
         // ----------------------------------------------
 
-        if (method === "Online") {
+        if (method !== "Pay Onsite") {
 
             const fileError = validateFiles(files);
 
